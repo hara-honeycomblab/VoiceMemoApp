@@ -75,17 +75,6 @@ class RecordFragment : Fragment() {
         mr.release()
     }
 
-    fun startPlay() {
-        mp.setDataSource(path)
-        mp.prepare()
-        mp.start()
-    }
-
-    fun stopPlay() {
-        mp.stop()
-        mp.release()
-    }
-
     companion object {
         @JvmStatic
         fun newInstance() = RecordFragment()
