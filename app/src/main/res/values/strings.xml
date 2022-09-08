@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">VoiceMemoApp</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="playbackButton">playback</string>
+    <string name="recordButton">record</string>
+    <string name="playbackingButton">playbacking</string>
+    <string name="returnButton">return</string>
+    <string name="recordingButton">recording</string>
+    <string name="saveButton">save</string>
+    <string name="homeText">HOME</string>
+    <string name="recordText">RECORD</string>
+    <string name="playbackText">PLAYBACK</string>
+</resources>
