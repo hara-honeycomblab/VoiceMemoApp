@@ -2,9 +2,7 @@ package com.example.voicememoapp
 
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.graphics.Color
-import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.os.Bundle
 import android.os.Environment
@@ -15,12 +13,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import java.io.File
 
 class RecordFragment : Fragment() {
-
-    private var path: String = Environment.getExternalStorageDirectory().toString() + "/voise.3gp"
     private var mr = MediaRecorder()
-    private var mp = MediaPlayer()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -35,13 +31,15 @@ class RecordFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val recordingButton: Button = view.findViewById(R.id.recordingButton)
         val saveButton: Button = view.findViewById(R.id.saveButton)
+        var voiceStorageDir = File(context?.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "voise.3gp")
         //音声録音
         recordingButton.setOnTouchListener { v, event ->
                 when (event.actionMasked) {
                     MotionEvent.ACTION_DOWN -> {
                         //録音開始
                         recordingButton.setBackgroundColor(Color.RED)
-                        startRecord()
+                        Log.e("", voiceStorageDir.path)
+                        startRecord(voiceStorageDir.path)
                     }
                     MotionEvent.ACTION_UP -> {
                         //録音停止
@@ -60,7 +58,7 @@ class RecordFragment : Fragment() {
         }
     }
 
-    private fun startRecord() {
+    private fun startRecord(path: String) {
         mr.setAudioSource(MediaRecorder.AudioSource.MIC)
         mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)//THREE_GPP
         mr.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)//AMR_NB

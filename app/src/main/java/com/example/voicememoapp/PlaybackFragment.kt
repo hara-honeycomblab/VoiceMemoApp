@@ -9,10 +9,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileReader
 
 class PlaybackFragment : Fragment() {
     private var mp = MediaPlayer()
-    private var path: String = Environment.getExternalStorageDirectory().toString() + "/voise.3gp"
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -26,11 +28,15 @@ class PlaybackFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val playbackingButton: Button = view.findViewById(R.id.playbackingButton)
         val returnButton: Button = view.findViewById(R.id.returnButton)
-        playbackingButton.setOnClickListener {
-            //音声再生
-            startPlay()
+        var voiceStorageDir = File(context?.getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS), "voise.3gp")
+        if (voiceStorageDir.length() != 0L)
+        {
+            playbackingButton.setOnClickListener {
+                //音声再生
+                Log.e("", voiceStorageDir.path)
+                startPlay(voiceStorageDir.path)
+            }
         }
-
         returnButton.setOnClickListener {
             //音声停止
             stopPlay()
@@ -41,7 +47,7 @@ class PlaybackFragment : Fragment() {
         }
     }
 
-    private fun startPlay() {
+    private fun startPlay(path: String) {
         stopPlay()
         mp.setDataSource(path)
         mp.prepare()
@@ -49,10 +55,8 @@ class PlaybackFragment : Fragment() {
     }
 
     private fun stopPlay() {
-        if (mp.isPlaying){
-            mp.stop()
-            mp.reset()
-        }
+        mp.stop()
+        mp.reset()
     }
 
     companion object {
