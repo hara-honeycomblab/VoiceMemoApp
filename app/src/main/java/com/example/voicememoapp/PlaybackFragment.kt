@@ -16,8 +16,6 @@ import java.io.FileReader
 
 class PlaybackFragment : Fragment() {
     private var mp = MediaPlayer()
-    private lateinit var backButtonCallback: OnBackPressedCallback
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,20 +44,10 @@ class PlaybackFragment : Fragment() {
             stopPlay()
             mp.release()
             parentFragmentManager.beginTransaction()
+                .addToBackStack("")
                 .replace(R.id.main, HomeFragment.newInstance())
                 .commit()
         }
-
-        backButtonCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                stopPlay()
-                mp.release()
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.main, HomeFragment.newInstance())
-                    .commit()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backButtonCallback)
     }
 
     private fun startPlay(path: String) {
