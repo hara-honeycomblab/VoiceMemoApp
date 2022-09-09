@@ -12,11 +12,13 @@ import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import java.io.File
 
 class RecordFragment : Fragment() {
     private var mr = MediaRecorder()
+    private lateinit var backButtonCallback: OnBackPressedCallback
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,6 +59,15 @@ class RecordFragment : Fragment() {
                 .replace(R.id.main, HomeFragment.newInstance())
                 .commit()
         }
+        backButtonCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                mr.release()
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.main, HomeFragment.newInstance())
+                    .commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backButtonCallback)
     }
 
     private fun startRecord(path: String) {

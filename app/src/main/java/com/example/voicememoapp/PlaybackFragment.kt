@@ -9,12 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import androidx.activity.OnBackPressedCallback
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
 
 class PlaybackFragment : Fragment() {
     private var mp = MediaPlayer()
+    private lateinit var backButtonCallback: OnBackPressedCallback
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -37,6 +40,7 @@ class PlaybackFragment : Fragment() {
                 startPlay(voiceStorageDir.path)
             }
         }
+
         returnButton.setOnClickListener {
             //音声停止
             stopPlay()
@@ -45,6 +49,17 @@ class PlaybackFragment : Fragment() {
                 .replace(R.id.main, HomeFragment.newInstance())
                 .commit()
         }
+
+        backButtonCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                stopPlay()
+                mp.release()
+                parentFragmentManager.beginTransaction()
+                    .replace(R.id.main, HomeFragment.newInstance())
+                    .commit()
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backButtonCallback)
     }
 
     private fun startPlay(path: String) {
