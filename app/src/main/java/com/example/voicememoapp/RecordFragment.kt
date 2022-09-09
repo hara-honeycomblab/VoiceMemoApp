@@ -52,6 +52,7 @@ class RecordFragment : Fragment() {
 
         saveButton.setOnClickListener {
             //音声保存
+            mr.release()
             parentFragmentManager.beginTransaction()
                 .replace(R.id.main, HomeFragment.newInstance())
                 .commit()
@@ -70,7 +71,6 @@ class RecordFragment : Fragment() {
     private fun stopRecord() {
         mr.stop()
         mr.reset()
-        mr.release()
     }
 
     companion object {
