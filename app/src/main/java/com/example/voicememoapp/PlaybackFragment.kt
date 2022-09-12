@@ -44,6 +44,13 @@ class PlaybackFragment : Fragment() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        stopPlay()
+        mp.release()
+    }
+
+
     private fun startPlay(path: String) {
         stopPlay()
         mp.setDataSource(path)

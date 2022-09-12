@@ -59,6 +59,11 @@ class RecordFragment : Fragment() {
         }
     }
 
+    override fun onPause() {
+        super.onPause()
+        mr.release()
+    }
+
     private fun startRecord(path: String) {
         mr.setAudioSource(MediaRecorder.AudioSource.MIC)
         mr.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)//THREE_GPP
