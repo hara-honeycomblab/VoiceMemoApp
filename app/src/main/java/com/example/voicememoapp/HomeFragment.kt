@@ -11,8 +11,6 @@ import androidx.fragment.app.FragmentManager
 
 class HomeFragment : Fragment() {
 
-    private lateinit var backButtonCallback: OnBackPressedCallback
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -38,15 +36,6 @@ class HomeFragment : Fragment() {
                 .replace(R.id.main, PlaybackFragment.newInstance())
                 .commit()
         }
-
-
-        backButtonCallback = object : OnBackPressedCallback(true) {
-            override fun handleOnBackPressed() {
-                getActivity()?.finish()
-            }
-        }
-        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, backButtonCallback)
-
     }
 
     companion object {

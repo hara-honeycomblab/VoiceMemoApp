@@ -52,12 +52,10 @@ class RecordFragment : Fragment() {
             }
 
         saveButton.setOnClickListener {
-            //音声保存
-            mr.release()
-            parentFragmentManager.beginTransaction()
-                .addToBackStack("")
-                .replace(R.id.main, HomeFragment.newInstance())
-                .commit()
+            parentFragmentManager.popBackStack()
+//            parentFragmentManager.beginTransaction()
+//                .addToBackStack("")
+//                .commit()
         }
     }
 

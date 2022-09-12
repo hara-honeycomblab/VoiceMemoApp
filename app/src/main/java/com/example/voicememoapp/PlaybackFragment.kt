@@ -34,19 +34,13 @@ class PlaybackFragment : Fragment() {
         {
             playbackingButton.setOnClickListener {
                 //音声再生
-                Log.e("", voiceStorageDir.path)
                 startPlay(voiceStorageDir.path)
             }
         }
 
         returnButton.setOnClickListener {
             //音声停止
-            stopPlay()
-            mp.release()
-            parentFragmentManager.beginTransaction()
-                .addToBackStack("")
-                .replace(R.id.main, HomeFragment.newInstance())
-                .commit()
+            parentFragmentManager.popBackStack()
         }
     }
 
